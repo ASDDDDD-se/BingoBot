@@ -99,16 +99,16 @@ async def select(ctx, *numbers: int):
     max_prob = max(probabilities.values(), default=0)
     max_prob_numbers = [num for num, prob in probabilities.items() if prob == max_prob and max_prob > 0]
     
-    # 빙고판을 정렬된 네모표 형태로 변환 (칸 밀림 방지)
+    # 빙고판을 정렬된 네모표 형태로 변환 (칸 밀림 방지, 정렬 유지)
     bingo_table = "┌───────┬───────┬───────┬───────┬───────┐\n"
     for r in range(5):
         row_values = " │ ".join(
-            "  ❌   " if bingo_board[r, c] in selected_numbers else
-            f" {bingo_board[r, c]:>2} " for c in range(5)
+            f"  ❌   " if bingo_board[r, c] in selected_numbers else
+            f" {bingo_board[r, c]:^3} " for c in range(5)
         )
         row_probs = " │ ".join(
-            "      " if bingo_board[r, c] in selected_numbers else
-            f"({probabilities[bingo_board[r, c]]:>4.1f}%)" for c in range(5)
+            f"       " if bingo_board[r, c] in selected_numbers else
+            f"({probabilities[bingo_board[r, c]]:^5.1f}%)" for c in range(5)
         )
         bingo_table += f"│ {row_values} │\n"
         bingo_table += f"│ {row_probs} │\n"
