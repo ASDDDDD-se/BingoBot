@@ -66,12 +66,7 @@ async def on_ready():
     print(f"✅ {bot.user} 봇이 성공적으로 실행되었습니다!")
     print(f"봇이 {len(bot.guilds)}개의 서버에서 실행 중입니다.")
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return  # 봇이 스스로 메시지를 보내는 것을 방지
-    print(f"📩 받은 메시지: {message.content}")
-    await bot.process_commands(message)
+# 중복 응답 방지 (on_message 제거)
 
 # 게임 상태 저장
 selected_numbers = set()
@@ -120,8 +115,7 @@ async def select(ctx, *numbers: int):
         if r < 4:
             bingo_table += "├───────┼───────┼───────┼───────┼───────┤\n"
     bingo_table += "└───────┴───────┴───────┴───────┴───────┘"
-    bingo_msg = f"""**🎲 빙고판 🎲**
-```
+    bingo_msg = f"""**🎲 빙고판 🎲**\n```
 {bingo_table}
 ```"""
     
