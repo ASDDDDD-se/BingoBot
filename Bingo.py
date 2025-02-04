@@ -8,6 +8,13 @@ import os
 # 환경 변수에서 디스코드 토큰 불러오기
 TOKEN = os.getenv("DISCORD_TOKEN")
 
+# 모든 intents 활성화
+intents = discord.Intents.default()
+intents.message_content = True  # 메시지 내용을 읽을 수 있도록 설정
+
+# 봇 설정
+bot = commands.Bot(command_prefix='!', intents=intents)
+
 # 빙고판 생성 (1부터 25까지 순차 배치)
 bingo_board = np.arange(1, 26).reshape(5, 5)
 
@@ -52,10 +59,6 @@ def count_bingo_lines(selected):
         bingo_count += 1
     
     return bingo_count
-
-# 디스코드 봇 설정
-intents = discord.Intents.default()
-bot = commands.Bot(command_prefix='!', intents=intents)
 
 # 게임 상태 저장
 selected_numbers = set()
