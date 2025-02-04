@@ -60,6 +60,17 @@ def count_bingo_lines(selected):
     
     return bingo_count
 
+# 디버깅을 위한 실행 상태 로그 출력
+@bot.event
+async def on_ready():
+    print(f"✅ {bot.user} 봇이 성공적으로 실행되었습니다!")
+    print(f"봇이 {len(bot.guilds)}개의 서버에서 실행 중입니다.")
+
+@bot.event
+async def on_message(message):
+    print(f"📩 받은 메시지: {message.content}")
+    await bot.process_commands(message)
+
 # 게임 상태 저장
 selected_numbers = set()
 attempts_left = 16
