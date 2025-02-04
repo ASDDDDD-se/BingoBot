@@ -3,6 +3,10 @@ from discord.ext import commands
 import numpy as np
 import pandas as pd
 import random
+import os
+
+# 환경 변수에서 디스코드 토큰 불러오기
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 # 빙고판 생성 (1부터 25까지 순차 배치)
 bingo_board = np.arange(1, 26).reshape(5, 5)
@@ -50,7 +54,6 @@ def count_bingo_lines(selected):
     return bingo_count
 
 # 디스코드 봇 설정
-TOKEN = 'MTMzNjIwNjI3NDI1NzQ4NTgzNA.GA75Wn.qidZfH92quf69phz86Nk1zZn3I-x_oKyMQGxM4'
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
@@ -114,4 +117,7 @@ async def reset(ctx):
     await ctx.send("🔄 게임이 초기화되었습니다. !select 명령어로 숫자를 선택하세요!")
 
 # 봇 실행
-bot.run(TOKEN)
+if TOKEN:
+    bot.run(TOKEN)
+else:
+    print("❌ DISCORD_TOKEN 환경 변수가 설정되지 않았습니다.")
